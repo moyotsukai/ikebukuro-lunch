@@ -5,14 +5,11 @@ declare const styles: {
   readonly "DialogOverlay": string;
   readonly "DialogTitle": string;
   readonly "Fieldset": string;
+  readonly "IconButton": string;
   readonly "Input": string;
   readonly "Label": string;
-  readonly "PersonButton": string;
-  readonly "RadioGroupIndicator": string;
-  readonly "RadioGroupItem": string;
-  readonly "RadioGroupRoot": string;
-  readonly "RadioLabel": string;
   readonly "contentShow": string;
+  readonly "createButton": string;
   readonly "overlayShow": string;
 };
 export = styles;

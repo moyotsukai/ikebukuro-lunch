@@ -1,8 +1,9 @@
 "use client"
 
-import { PlusIcon } from "@radix-ui/react-icons"
 import styles from "./style.module.css"
 import { useEffect } from "react"
+import NewRestaurantDialog from "@/components/features/NewRestaurantDialog"
+import Spacer from "@/components/ui/Spacer"
 
 export default function Home() {
   useEffect(() => {
@@ -11,10 +12,11 @@ export default function Home() {
 
   return (
     <div>
-      <h1>お店一覧</h1>
-      <button>
-        <PlusIcon />
-      </button>
+      <Spacer size={30} />
+      <div className={styles.top}>
+        <h1>お店一覧</h1>
+        <NewRestaurantDialog />
+      </div>
     </div>
   )
 }

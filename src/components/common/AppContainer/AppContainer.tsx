@@ -13,10 +13,11 @@ export default function AppContainer({ children }: Props) {
   return (
     <RecoilRoot>
       <SignInProvider>
-        <header>
+        <header className={styles.header}>
+          <div className={styles.title}>日B池袋ごはん！</div>
           <NameDialog />
         </header>
-        {children}
+        <main className={styles.mainContainer}>{children}</main>
       </SignInProvider>
     </RecoilRoot>
   )

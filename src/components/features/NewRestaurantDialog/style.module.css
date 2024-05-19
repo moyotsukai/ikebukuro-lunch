@@ -1,3 +1,15 @@
+.createButton {
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  padding: 8px 12px;
+  border-radius: 6px;
+  background-color: var(--c-primary);
+  border: none;
+  color: #fff;
+  cursor: pointer;
+}
+
 .DialogOverlay {
   background-color: rgba(0, 0, 0, 0.1);
   position: fixed;
@@ -31,13 +43,6 @@
   font-size: 17px;
 }
 
-.PersonButton {
-  width: 34px;
-  height: 34px;
-  border-radius: 17px;
-  border: solid 1px var(--c-border-light);
-}
-
 .Button {
   display: inline-flex;
   align-items: center;
@@ -69,6 +74,21 @@
   color: #fff;
 }
 
+.IconButton {
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  border-radius: 100%;
+  height: 25px;
+  width: 25px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
 .Fieldset {
   all: unset;
   display: flex;
@@ -79,8 +99,7 @@
 
 .Label {
   font-size: 15px;
-  width: 90px;
-  text-align: right;
+  min-width: 80px;
 }
 
 .Input {
@@ -119,46 +138,4 @@
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
   }
-}
-
-.RadioGroupRoot {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.RadioGroupItem {
-  border: solid 1px var(--c-border);
-  background-color: white;
-  width: 25px;
-  height: 25px;
-  border-radius: 100%;
-  cursor: pointer;
-}
-.RadioGroupItem:focus {
-  box-shadow: 0 0 0 1px #333;
-}
-
-.RadioGroupIndicator {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  position: relative;
-}
-.RadioGroupIndicator::after {
-  content: "";
-  display: block;
-  width: 11px;
-  height: 11px;
-  border-radius: 50%;
-  background-color: var(--c-primary);
-}
-
-.RadioLabel {
-  cursor: pointer;
-  font-size: 15px;
-  line-height: 1;
-  padding-left: 15px;
 }
