@@ -2,6 +2,8 @@ import type { Metadata } from "next"
 import { Noto_Sans_JP } from "next/font/google"
 import "./globals.css"
 import styles from "./layout.module.css"
+import Head from "next/head"
+import AppContainer from "@/components/common/AppContainer"
 
 const noto = Noto_Sans_JP({ subsets: ["latin"] })
 
@@ -17,8 +19,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja">
+      <Head>
+        <meta
+          name="robots"
+          content="noindex"
+        />
+      </Head>
       <body className={`${noto.className} ${styles.container}`}>
-        <main className={styles.content}>{children}</main>
+        <main className={styles.content}>
+          <AppContainer>{children}</AppContainer>
+        </main>
       </body>
     </html>
   )

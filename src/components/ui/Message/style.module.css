@@ -1,0 +1,17 @@
+.text {
+  font-size: 12pt;
+  margin: 0 10px;
+  display: inline-block;
+}
+
+.loading {
+  padding: 30px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.message {
+  padding: 30px 0;
+  text-align: center;
+}
