@@ -3,6 +3,7 @@ import { onAuthStateChanged } from "firebase/auth"
 import { useRecoilState } from "recoil"
 import { userState } from "../../states/atoms"
 import { auth } from "@/libs/firebase"
+import { getUserDocData } from "../user/getUserDocData"
 
 export const useAuth = () => {
   const [user, setUser] = useRecoilState(userState)
@@ -12,8 +13,9 @@ export const useAuth = () => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       try {
         if (user) {
-          setUser({ uid: user.uid, name: "" })
-          console.log("useAuth, uid: ", user.uid)
+          const userData = await getUserDocData(user.uid)
+          setUser(userData)
+          console.log("useAuth, uid: ", userData)
         } else {
           setUser(undefined)
           console.log("useAuth, Not signed in")

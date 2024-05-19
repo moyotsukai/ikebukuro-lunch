@@ -1,1 +1,1 @@
-export { default } from './NamePopover'
+export { default } from "./NameDialog"

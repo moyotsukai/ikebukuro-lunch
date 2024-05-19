@@ -1,8 +1,9 @@
 "use client"
 
-import { RecoilRoot } from "recoil"
+import { RecoilRoot, useRecoilValue } from "recoil"
 import styles from "./style.module.css"
 import SignInProvider from "@/components/features/SignInProvider"
+import NameDialog from "../NamePopover/NameDialog"
 
 type Props = {
   children: React.ReactNode
@@ -11,7 +12,12 @@ type Props = {
 export default function AppContainer({ children }: Props) {
   return (
     <RecoilRoot>
-      <SignInProvider>{children}</SignInProvider>
+      <SignInProvider>
+        <header>
+          <NameDialog />
+        </header>
+        {children}
+      </SignInProvider>
     </RecoilRoot>
   )
 }

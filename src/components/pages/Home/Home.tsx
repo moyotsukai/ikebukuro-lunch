@@ -1,18 +1,20 @@
 "use client"
 
-import NamePopover from "@/components/common/NamePopover"
+import { PlusIcon } from "@radix-ui/react-icons"
 import styles from "./style.module.css"
-import { userState } from "@/states/atoms"
-import { useRecoilValue } from "recoil"
+import { useEffect } from "react"
 
 export default function Home() {
-  const user = useRecoilValue(userState)
-  const isNameNotDetermined = user?.name === undefined || user?.name === ""
+  useEffect(() => {
+    //TODO: お昼案一覧取得
+  }, [])
 
   return (
     <div>
-      {isNameNotDetermined && <NamePopover />}
-      Hello, {user?.name}
+      <h1>お店一覧</h1>
+      <button>
+        <PlusIcon />
+      </button>
     </div>
   )
 }
