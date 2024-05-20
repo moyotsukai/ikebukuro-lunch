@@ -9,7 +9,8 @@ export const getUserDocData = async (userId: string): Promise<User | null> => {
     const data = docSnapshot.data()
     return {
       uid: data.uid ?? "",
-      name: data.name ?? ""
+      name: data.name ?? "",
+      role: data.role ?? "member"
     }
   } else {
     return null

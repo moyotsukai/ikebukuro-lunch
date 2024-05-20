@@ -1,12 +1,11 @@
 :root {
-  --c-primary: #1a7dff;
-  --c-background: #ebf5ff;
+  --c-primary: #ff941a;
+  --c-background: #fff8eb;
   --c-text: #17334f;
-  --c-primary-text: #0075eb;
   --c-hover-white: #ebf0f5;
-  --c-border: #667380;
-  --c-border-light: #c8d6e4;
-  --c-shadow: hsla(210, 100%, 50%, 0.15);
+  --c-border: #807866;
+  --c-border-light: #e4dcc8;
+  --c-shadow: hsla(32, 100%, 50%, 0.15);
   --transition-duration: 0.2s;
   --animation-timing-function: cubic-bezier(0.6, 0, 0.4, 1);
 }

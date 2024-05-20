@@ -22,7 +22,7 @@ export default function SignInProvider({ isLoading, children }: Props) {
   }
 
   if (user === null) {
-    return <Message>接続されていません</Message>
+    return <Message>接続エラー</Message>
   }
 
   return <React.Fragment>{children}</React.Fragment>

@@ -13,23 +13,30 @@ export const useAuth = () => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       try {
         if (user) {
+          //Signed in
           const userData = await getUserDocData(user.uid)
-          setUser(userData)
-          console.log("useAuth, uid: ", userData)
+          if (userData) {
+            setUser(userData)
+          } else {
+            setUser({
+              uid: user.uid,
+              name: "",
+              role: "member"
+            })
+          }
         } else {
+          //Not signed in
           setUser(undefined)
-          console.log("useAuth, Not signed in")
         }
       } catch (error) {
         //Most probably a connection error
         setUser(null)
-        console.log("useAuth, error", error)
       } finally {
         setIsLoadingUser(false)
       }
     })
 
-    return () => unsubscribe()
+    return unsubscribe
   }, [setUser])
 
   return { user, isLoadingUser }

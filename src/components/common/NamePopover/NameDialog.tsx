@@ -5,7 +5,7 @@ import styles from "./style.module.css"
 import { userState } from "@/states/atoms"
 import { useEffect, useState } from "react"
 import { useRecoilState } from "recoil"
-import * as Dialog from "@radix-ui/react-dialog"
+import Dialog from "@/components/ui/Dialog"
 import { PersonIcon } from "@radix-ui/react-icons"
 import Spacer from "@/components/ui/Spacer"
 import * as RadioGroup from "@radix-ui/react-radio-group"
@@ -20,6 +20,10 @@ export default function NameDialog() {
 
   useEffect(() => {
     setName(user?.name ?? "")
+    if (!user?.role) {
+      return
+    }
+    setRole(user?.role)
   }, [user])
 
   const onChangeName = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -59,100 +63,89 @@ export default function NameDialog() {
       open={isDialogOpen}
       onOpenChange={setIsDialogOpen}
     >
-      <Dialog.Trigger asChild>
+      <Dialog.Trigger>
         <button className={styles.PersonButton}>
           <PersonIcon />
         </button>
       </Dialog.Trigger>
-      <Dialog.Portal>
-        <Dialog.Overlay className={styles.DialogOverlay} />
-        <Dialog.Content
-          onEscapeKeyDown={(e) => {
-            e.preventDefault()
-          }}
-          onPointerDownOutside={(e) => {
-            e.preventDefault()
-          }}
-          onInteractOutside={(e) => {
-            e.preventDefault()
-          }}
-          className={styles.DialogContent}
-        >
-          <Dialog.Title className={styles.DialogTitle}>ニックネームを設定しよう！</Dialog.Title>
-          <Spacer size={30} />
-          <fieldset className={styles.Fieldset}>
-            <label
-              className={styles.Label}
-              htmlFor="name"
-            >
-              ニックネーム
-            </label>
-            <input
-              className={styles.Input}
-              id="name"
-              value={name}
-              onChange={onChangeName}
-            />
-          </fieldset>
+      <Dialog.Content
+        title="ニックネームを設定しよう！"
+        onClose={(e) => {
+          e.preventDefault()
+        }}
+      >
+        <fieldset className={styles.Fieldset}>
+          <label
+            className={styles.Label}
+            htmlFor="name"
+          >
+            ニックネーム
+          </label>
+          <input
+            className={styles.Input}
+            id="name"
+            value={name}
+            onChange={onChangeName}
+          />
+        </fieldset>
 
-          <form>
-            <label
-              className={styles.Label}
-              htmlFor="name"
-            >
-              ロール
-            </label>
-            <Spacer size={12} />
-            <RadioGroup.Root
-              className={styles.RadioGroupRoot}
-              defaultValue="member"
-              value={role}
-              onValueChange={onChangeRole}
-            >
-              <div style={{ display: "flex", alignItems: "center" }}>
-                <RadioGroup.Item
-                  className={styles.RadioGroupItem}
-                  value="member"
-                  id="r1"
-                >
-                  <RadioGroup.Indicator className={styles.RadioGroupIndicator} />
-                </RadioGroup.Item>
-                <label
-                  className={styles.RadioLabel}
-                  htmlFor="r1"
-                >
-                  メンバー
-                </label>
-              </div>
-              <div style={{ display: "flex", alignItems: "center" }}>
-                <RadioGroup.Item
-                  className={styles.RadioGroupItem}
-                  value="mentor"
-                  id="r2"
-                >
-                  <RadioGroup.Indicator className={styles.RadioGroupIndicator} />
-                </RadioGroup.Item>
-                <label
-                  className={styles.RadioLabel}
-                  htmlFor="r2"
-                >
-                  メンター（管理者ロール）
-                </label>
-              </div>
-            </RadioGroup.Root>
-          </form>
+        <form>
+          <label
+            className={styles.Label}
+            htmlFor="name"
+          >
+            ロール
+          </label>
+          <Spacer size={12} />
+          <RadioGroup.Root
+            className={styles.RadioGroupRoot}
+            defaultValue="member"
+            value={role}
+            onValueChange={onChangeRole}
+          >
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <RadioGroup.Item
+                className={styles.RadioGroupItem}
+                value="member"
+                id="r1"
+              >
+                <RadioGroup.Indicator className={styles.RadioGroupIndicator} />
+              </RadioGroup.Item>
+              <label
+                className={styles.RadioLabel}
+                htmlFor="r1"
+              >
+                メンバー
+              </label>
+            </div>
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <RadioGroup.Item
+                className={styles.RadioGroupItem}
+                value="mentor"
+                id="r2"
+              >
+                <RadioGroup.Indicator className={styles.RadioGroupIndicator} />
+              </RadioGroup.Item>
+              <label
+                className={styles.RadioLabel}
+                htmlFor="r2"
+              >
+                メンター（管理者ロール）
+              </label>
+            </div>
+          </RadioGroup.Root>
+        </form>
 
-          <div style={{ display: "flex", marginTop: 25, justifyContent: "flex-end" }}>
-            <button
-              onClick={onClickSave}
-              className={name !== "" ? styles.Button : styles.ButtonDisabled}
-              disabled={name === ""}
-            >
-              保存
-            </button>
-          </div>
-        </Dialog.Content>
-      </Dialog.Portal>
+        <div style={{ display: "flex", marginTop: 25, justifyContent: "flex-end" }}>
+          <button
+            onClick={onClickSave}
+            disabled={name === ""}
+            className={name === "" ? styles.buttonDisabled : styles.button}
+          >
+            保存
+          </button>
+        </div>
+      </Dialog.Content>
     </Dialog.Root>
   )
 }
