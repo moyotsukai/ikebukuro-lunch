@@ -13,7 +13,7 @@ export default function NewRestaurantDialog() {
   const [name, setName] = useState<string>("")
   const [url, setUrl] = useState<string>("")
   const user = useRecoilValue(userState)
-  const isFormNotFilled = name === "" || url === ""
+  const isFormNotFilled = name === ""
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false)
 
   const onChangeName = (event: React.ChangeEvent<HTMLInputElement>) => {

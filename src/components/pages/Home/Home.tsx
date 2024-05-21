@@ -1,14 +1,13 @@
 "use client"
 
 import styles from "./style.module.css"
-import { useEffect } from "react"
 import NewRestaurantDialog from "@/components/features/NewRestaurantDialog"
+import RestaurantCard from "@/components/features/RestaurantCard"
 import Spacer from "@/components/ui/Spacer"
+import { useRestaurants } from "@/model/restaurant/useRestaurants"
 
 export default function Home() {
-  useEffect(() => {
-    //TODO: お昼案一覧取得
-  }, [])
+  const restaurants = useRestaurants()
 
   return (
     <div>
@@ -16,6 +15,17 @@ export default function Home() {
       <div className={styles.top}>
         <h1>お店一覧</h1>
         <NewRestaurantDialog />
+      </div>
+      <div>
+        {restaurants.map((restaurant, index) => (
+          <>
+            <Spacer size={10} />
+            <RestaurantCard
+              restaurant={restaurant}
+              key={index}
+            />
+          </>
+        ))}
       </div>
     </div>
   )

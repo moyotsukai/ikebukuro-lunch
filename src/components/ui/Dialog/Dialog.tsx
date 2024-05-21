@@ -29,7 +29,7 @@ export function Trigger({ children }: TriggerProps) {
 
 type ContentProps = {
   title: string
-  onClose: (event: any) => void
+  onClose?: (event: any) => void
   children: React.ReactNode
 }
 export function Content({ title, onClose, children }: ContentProps) {
@@ -51,7 +51,7 @@ export function Content({ title, onClose, children }: ContentProps) {
 }
 
 type CloseProps = {
-  onClick: MouseEventHandler<HTMLButtonElement>
+  onClick?: MouseEventHandler<HTMLButtonElement>
 }
 export function Close({ onClick }: CloseProps) {
   return (
