@@ -10,6 +10,7 @@ import { useAuth } from "@/model/auth/useAuth"
 import { updateRestaurantArray } from "@/model/restaurant/updateRestaurantDocData"
 import { User } from "@/data/User"
 import Avatar from "@/components/ui/Avatar"
+import { useVotingStatus } from "@/model/votingStatus/useVotingStatus"
 
 type Props = {
   restaurant: Restaurant
@@ -18,6 +19,7 @@ type Props = {
 
 export default function RestaurantCard({ restaurant, usersList }: Props) {
   const { user } = useAuth()
+  const isVotingEnabled = useVotingStatus()
   const [isOpenDialog, setIsOpenDialog] = useState<boolean>(false)
 
   const topAttendants =
@@ -57,19 +59,28 @@ export default function RestaurantCard({ restaurant, usersList }: Props) {
       </div>
       <Spacer size={12} />
       <div className={styles.buttonContainer}>
-        {restaurant.attendantsIds.includes(user?.uid ?? "") ? (
-          <button
-            onClick={onClickJoin}
-            className={styles.calcelButton}
-          >
-            参加済み
-          </button>
+        {isVotingEnabled ? (
+          restaurant.attendantsIds.includes(user?.uid ?? "") ? (
+            <button
+              onClick={onClickJoin}
+              className={styles.calcelButton}
+            >
+              参加済み
+            </button>
+          ) : (
+            <button
+              onClick={onClickJoin}
+              className={styles.joinButton}
+            >
+              行きたい
+            </button>
+          )
         ) : (
           <button
-            onClick={onClickJoin}
-            className={styles.joinButton}
+            disabled={true}
+            className={styles.waitingMessageButton}
           >
-            行きたい
+            まもなく投票開始
           </button>
         )}
         <Dialog.Root

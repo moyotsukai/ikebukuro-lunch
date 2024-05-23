@@ -7,6 +7,7 @@ declare const styles: {
   readonly "link": string;
   readonly "personNameRow": string;
   readonly "title": string;
+  readonly "waitingMessageButton": string;
 };
 export = styles;
 

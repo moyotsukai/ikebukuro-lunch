@@ -27,7 +27,6 @@ export const useRestaurants = () => {
             createdAt: data.createdAt ?? new Date()
           }
           setRestaurants((currentValue) => [newRestaurant, ...currentValue])
-          console.log("restaurant added")
         }
         if (change.type === "modified") {
           const data = change.doc.data()
@@ -50,7 +49,6 @@ export const useRestaurants = () => {
             })
             return newValue
           })
-          console.log("restaurant modified")
         }
       })
     })

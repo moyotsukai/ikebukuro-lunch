@@ -23,7 +23,6 @@ export const useUsersList = () => {
             role: data.role ?? "member"
           }
           setUsersList((currentValue) => [newUser, ...currentValue])
-          console.log("usersList added")
         }
       })
     })
