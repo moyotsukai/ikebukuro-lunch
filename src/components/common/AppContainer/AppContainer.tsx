@@ -1,6 +1,6 @@
 "use client"
 
-import { RecoilRoot, useRecoilValue } from "recoil"
+import { RecoilRoot } from "recoil"
 import styles from "./style.module.css"
 import SignInProvider from "@/components/features/SignInProvider"
 import NameDialog from "../NamePopover/NameDialog"

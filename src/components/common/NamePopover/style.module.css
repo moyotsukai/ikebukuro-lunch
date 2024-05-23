@@ -27,10 +27,8 @@
 }
 
 .PersonButton {
-  width: 34px;
-  height: 34px;
-  border-radius: 17px;
-  border: solid 1px var(--c-border-light);
+  border: none;
+  background-color: transparent;
   cursor: pointer;
 }
 
@@ -101,7 +99,7 @@
   cursor: pointer;
 }
 .RadioGroupItem:focus {
-  box-shadow: 0 0 0 1px #333;
+  box-shadow: 0 0 0 1px var(--c-primary);
 }
 
 .RadioGroupIndicator {

@@ -9,7 +9,6 @@ export default function Message({ isLoading = false, children }: Props) {
   if (isLoading) {
     return (
       <div className={styles.loading}>
-        {/* <LoadingCircle /> */}
         <span className={styles.text}>{children}</span>
       </div>
     )

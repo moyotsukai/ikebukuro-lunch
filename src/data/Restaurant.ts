@@ -1,4 +1,5 @@
 export type Restaurant = {
+  id: string
   name: string
   url: string
   attendantsIds: string[]

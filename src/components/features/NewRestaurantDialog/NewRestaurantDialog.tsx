@@ -7,7 +7,7 @@ import { useRecoilValue } from "recoil"
 import Dialog from "@/components/ui/Dialog"
 import { PlusIcon } from "@radix-ui/react-icons"
 import Spacer from "@/components/ui/Spacer"
-import { createRestaurantDocData } from "@/model/user/createRestaurantDocData"
+import { createRestaurantDocData } from "@/model/restaurant/createRestaurantDocData"
 
 export default function NewRestaurantDialog() {
   const [name, setName] = useState<string>("")
@@ -85,7 +85,7 @@ export default function NewRestaurantDialog() {
             className={styles.Label}
             htmlFor="url"
           >
-            場所のURL
+            お店のURL
           </label>
           <input
             className={styles.Input}

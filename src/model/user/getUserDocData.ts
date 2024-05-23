@@ -8,7 +8,7 @@ export const getUserDocData = async (userId: string): Promise<User | null> => {
   if (docSnapshot.exists()) {
     const data = docSnapshot.data()
     return {
-      uid: data.uid ?? "",
+      uid: data.uid ?? docSnapshot.id,
       name: data.name ?? "",
       role: data.role ?? "member"
     }

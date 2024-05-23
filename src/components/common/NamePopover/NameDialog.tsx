@@ -6,10 +6,10 @@ import { userState } from "@/states/atoms"
 import { useEffect, useState } from "react"
 import { useRecoilState } from "recoil"
 import Dialog from "@/components/ui/Dialog"
-import { PersonIcon } from "@radix-ui/react-icons"
 import Spacer from "@/components/ui/Spacer"
 import * as RadioGroup from "@radix-ui/react-radio-group"
 import { Role } from "@/data/User"
+import Avatar from "@/components/ui/Avatar"
 
 export default function NameDialog() {
   const [name, setName] = useState<string>("")
@@ -65,7 +65,10 @@ export default function NameDialog() {
     >
       <Dialog.Trigger>
         <button className={styles.PersonButton}>
-          <PersonIcon />
+          <Avatar
+            size={32}
+            user={user}
+          />
         </button>
       </Dialog.Trigger>
       <Dialog.Content
