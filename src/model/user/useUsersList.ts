@@ -1,14 +1,19 @@
 import { User } from "@/data/User"
 import { db } from "@/libs/firebase"
 import { collection, onSnapshot } from "firebase/firestore"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 export const useUsersList = () => {
   const [usersList, setUsersList] = useState<User[]>([])
+  const hasFetched = useRef<boolean>(false)
 
   useEffect(() => {
+    if (hasFetched.current) {
+      return
+    }
     const collectionRef = collection(db, "users")
     const unsubscribe = onSnapshot(collectionRef, (snapshot) => {
+      hasFetched.current = true
       snapshot.docChanges().forEach((change) => {
         if (change.type === "added") {
           const data = change.doc.data()
@@ -18,6 +23,7 @@ export const useUsersList = () => {
             role: data.role ?? "member"
           }
           setUsersList((currentValue) => [newUser, ...currentValue])
+          console.log("usersList added")
         }
       })
     })

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { onAuthStateChanged } from "firebase/auth"
 import { useRecoilState } from "recoil"
 import { userState } from "../../states/atoms"
@@ -8,9 +8,14 @@ import { getUserDocData } from "../user/getUserDocData"
 export const useAuth = () => {
   const [user, setUser] = useRecoilState(userState)
   const [isLoadingUser, setIsLoadingUser] = useState<boolean>(true)
+  const hasFetched = useRef<boolean>(false)
 
   useEffect(() => {
+    if (hasFetched.current) {
+      return
+    }
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      hasFetched.current = true
       try {
         if (user) {
           //Signed in
