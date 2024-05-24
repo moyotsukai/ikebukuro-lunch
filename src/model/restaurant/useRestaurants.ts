@@ -2,13 +2,18 @@ import { Restaurant } from "@/data/Restaurant"
 import { db } from "@/libs/firebase"
 import { collection, onSnapshot } from "firebase/firestore"
 import { useEffect, useRef, useState } from "react"
+import { useAuth } from "../auth/useAuth"
 
 export const useRestaurants = () => {
+  const { user } = useAuth()
   const [restaurants, setRestaurants] = useState<Restaurant[]>([])
   const hasFetched = useRef<boolean>(false)
 
   useEffect(() => {
     if (hasFetched.current) {
+      return
+    }
+    if (!user) {
       return
     }
     const collectionRef = collection(db, "restaurants")
@@ -54,7 +59,7 @@ export const useRestaurants = () => {
     })
 
     return unsubscribe
-  }, [])
+  }, [user])
 
   return restaurants
 }

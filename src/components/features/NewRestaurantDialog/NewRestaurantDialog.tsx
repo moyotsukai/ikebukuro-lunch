@@ -1,18 +1,17 @@
 "use client"
 
 import styles from "./style.module.css"
-import { userState } from "@/states/atoms"
 import { useState } from "react"
-import { useRecoilValue } from "recoil"
 import Dialog from "@/components/ui/Dialog"
 import { PlusIcon } from "@radix-ui/react-icons"
 import Spacer from "@/components/ui/Spacer"
 import { createRestaurantDocData } from "@/model/restaurant/createRestaurantDocData"
+import { useAuth } from "@/model/auth/useAuth"
 
 export default function NewRestaurantDialog() {
   const [name, setName] = useState<string>("")
   const [url, setUrl] = useState<string>("")
-  const user = useRecoilValue(userState)
+  const { user } = useAuth()
   const isFormNotFilled = name === ""
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false)
 

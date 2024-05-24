@@ -2,18 +2,17 @@
 
 import { setUserDocData } from "@/model/user/setUserDocData"
 import styles from "./style.module.css"
-import { userState } from "@/states/atoms"
 import { useEffect, useState } from "react"
-import { useRecoilState } from "recoil"
 import Dialog from "@/components/ui/Dialog"
 import Spacer from "@/components/ui/Spacer"
 import * as RadioGroup from "@radix-ui/react-radio-group"
 import { Role } from "@/data/User"
 import Avatar from "@/components/ui/Avatar"
+import { useAuth } from "@/model/auth/useAuth"
 
 export default function NameDialog() {
   const [name, setName] = useState<string>("")
-  const [user, setUser] = useRecoilState(userState)
+  const { user, setUser } = useAuth()
   const isNameNotDetermined = user?.name === undefined || user?.name === ""
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(isNameNotDetermined)
   const [role, setRole] = useState<string>("member")
@@ -24,6 +23,7 @@ export default function NameDialog() {
       return
     }
     setRole(user?.role)
+    setIsDialogOpen(user?.name === undefined || user?.name === "")
   }, [user])
 
   const onChangeName = (event: React.ChangeEvent<HTMLInputElement>) => {
