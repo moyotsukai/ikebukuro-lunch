@@ -1,12 +1,11 @@
 import { useEffect, useRef, useState } from "react"
 import { onAuthStateChanged } from "firebase/auth"
-import { useRecoilState } from "recoil"
-import { userState } from "../../states/atoms"
 import { auth } from "@/libs/firebase"
 import { getUserDocData } from "../user/getUserDocData"
+import { User } from "@/data/User"
 
 export const useAuth = () => {
-  const [user, setUser] = useRecoilState(userState)
+  const [user, setUser] = useState<User | undefined | null>(undefined)
   const [isLoadingUser, setIsLoadingUser] = useState<boolean>(true)
   const hasFetched = useRef<boolean>(false)
 
@@ -44,5 +43,5 @@ export const useAuth = () => {
     return unsubscribe
   }, [setUser])
 
-  return { user, isLoadingUser }
+  return { user, setUser, isLoadingUser }
 }
