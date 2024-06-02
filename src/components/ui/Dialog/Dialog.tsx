@@ -36,19 +36,20 @@ type ContentProps = {
 export function Content({ title, onClose, children }: ContentProps) {
   return (
     <DialogPrimitive.Portal>
-      <DialogPrimitive.Overlay className={styles.dialogOverlay} />
-      <DialogPrimitive.Content
-        onEscapeKeyDown={onClose}
-        onPointerDownOutside={onClose}
-        onInteractOutside={onClose}
-        className={styles.dialogContent}
-      >
-        <ScrollArea>
-          <DialogPrimitive.Title className={styles.dialogTitle}>{title}</DialogPrimitive.Title>
-          <Spacer size={30} />
-          {children}
-        </ScrollArea>
-      </DialogPrimitive.Content>
+      <DialogPrimitive.Overlay className={styles.dialogOverlay}>
+        <DialogPrimitive.Content
+          onEscapeKeyDown={onClose}
+          onPointerDownOutside={onClose}
+          onInteractOutside={onClose}
+          className={styles.dialogContent}
+        >
+          <div className={styles.contentInside}>
+            <DialogPrimitive.Title className={styles.dialogTitle}>{title}</DialogPrimitive.Title>
+            <Spacer size={30} />
+            {children}
+          </div>
+        </DialogPrimitive.Content>
+      </DialogPrimitive.Overlay>
     </DialogPrimitive.Portal>
   )
 }

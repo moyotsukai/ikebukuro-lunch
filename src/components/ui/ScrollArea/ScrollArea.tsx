@@ -8,9 +8,7 @@ type Props = {
 export default function ScrollArea({ children }: Props) {
   return (
     <ScrollAreaPrimitive.Root className={styles.root}>
-      <ScrollAreaPrimitive.Viewport className={styles.viewport}>
-        <div style={{ padding: "15px 20px" }}>{children}</div>
-      </ScrollAreaPrimitive.Viewport>
+      <ScrollAreaPrimitive.Viewport className={styles.viewport}>{children}</ScrollAreaPrimitive.Viewport>
       <ScrollAreaPrimitive.Scrollbar
         className={styles.scrollbar}
         orientation="vertical"

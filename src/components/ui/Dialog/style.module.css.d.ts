@@ -5,6 +5,7 @@ declare const styles: {
   readonly "dialogOverlay": string;
   readonly "dialogTitle": string;
   readonly "overlayShow": string;
+  readonly "root": string;
+  readonly "contentInside": string;
 };
 export = styles;
-
