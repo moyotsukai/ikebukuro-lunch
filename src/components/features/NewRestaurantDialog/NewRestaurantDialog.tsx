@@ -84,7 +84,7 @@ export default function NewRestaurantDialog() {
             className={styles.Label}
             htmlFor="url"
           >
-            お店のURL
+            場所のURL
           </label>
           <input
             className={styles.Input}

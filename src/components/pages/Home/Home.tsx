@@ -7,19 +7,20 @@ import Spacer from "@/components/ui/Spacer"
 import { useAuth } from "@/model/auth/useAuth"
 import { useRestaurants } from "@/model/restaurant/useRestaurants"
 import { useVotingStatus } from "@/model/votingStatus/useVotingStatus"
-import { useUsersList } from "@/model/user/useUsersList"
 import React, { useState } from "react"
 import { setVotingStatus } from "@/model/votingStatus/setVotingStatus"
 import Dialog from "@/components/ui/Dialog"
 import { updateRestaurant } from "@/model/restaurant/updateRestaurantDocData"
 import { Restaurant } from "@/data/Restaurant"
+import UsersDialog from "@/components/features/UsersDialog"
+import { useUsersList } from "@/model/user/useUsersList"
 
 export default function Home() {
   const { user } = useAuth()
   const restaurants = useRestaurants()
-  const usersList = useUsersList()
   const isVotingEnabled = useVotingStatus()
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false)
+  const users = useUsersList()
 
   const onClickStart = async () => {
     await setVotingStatus({ votingStatus: { isVotingEnabled: true } })
@@ -37,6 +38,17 @@ export default function Home() {
       await updateRestaurant({ docId: restaurant.id, restaurant: modifiedProperties })
     }
   }
+
+  const usersNotDeterminedIds = users
+    .filter((user) => {
+      const usersDetermined = restaurants.map((restauran) => restauran.attendantsIds).flat()
+      if (usersDetermined.includes(user.uid)) {
+        return false
+      } else {
+        return true
+      }
+    })
+    .map((user) => user.uid)
 
   return (
     <div>
@@ -83,17 +95,23 @@ export default function Home() {
         </div>
       )}
       <Spacer size={20} />
+
+      {isVotingEnabled && (
+        <div className={styles.topInfoArea}>
+          <span>未投票</span>
+          <UsersDialog userIds={usersNotDeterminedIds} />
+        </div>
+      )}
+
       <div>
         {restaurants.map((restaurant, index) => (
           <React.Fragment key={index}>
             <Spacer size={10} />
-            <RestaurantCard
-              restaurant={restaurant}
-              usersList={usersList}
-            />
+            <RestaurantCard restaurant={restaurant} />
           </React.Fragment>
         ))}
       </div>
+      <Spacer size={40} />
     </div>
   )
 }

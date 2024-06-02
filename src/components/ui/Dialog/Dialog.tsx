@@ -3,6 +3,7 @@ import styles from "./style.module.css"
 import * as DialogPrimitive from "@radix-ui/react-dialog"
 import { Dispatch, MouseEventHandler, SetStateAction } from "react"
 import Spacer from "../Spacer"
+import ScrollArea from "../ScrollArea"
 
 type RootProps = {
   open: boolean
@@ -42,9 +43,11 @@ export function Content({ title, onClose, children }: ContentProps) {
         onInteractOutside={onClose}
         className={styles.dialogContent}
       >
-        <DialogPrimitive.Title className={styles.dialogTitle}>{title}</DialogPrimitive.Title>
-        <Spacer size={30} />
-        {children}
+        <ScrollArea>
+          <DialogPrimitive.Title className={styles.dialogTitle}>{title}</DialogPrimitive.Title>
+          <Spacer size={30} />
+          {children}
+        </ScrollArea>
       </DialogPrimitive.Content>
     </DialogPrimitive.Portal>
   )

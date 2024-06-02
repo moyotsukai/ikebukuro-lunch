@@ -4,6 +4,7 @@ declare const styles: {
   readonly "resetButton": string;
   readonly "startButton": string;
   readonly "top": string;
+  readonly "topInfoArea": string;
 };
 export = styles;
 

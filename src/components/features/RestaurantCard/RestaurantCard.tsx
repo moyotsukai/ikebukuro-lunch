@@ -4,26 +4,19 @@ import Link from "next/link"
 import styles from "./style.module.css"
 import { Restaurant } from "@/data/Restaurant"
 import Spacer from "@/components/ui/Spacer"
-import Dialog from "@/components/ui/Dialog"
-import React, { useState } from "react"
+import React from "react"
 import { useAuth } from "@/model/auth/useAuth"
 import { updateRestaurantArray } from "@/model/restaurant/updateRestaurantDocData"
-import { User } from "@/data/User"
-import Avatar from "@/components/ui/Avatar"
 import { useVotingStatus } from "@/model/votingStatus/useVotingStatus"
+import UsersDialog from "../UsersDialog"
 
 type Props = {
   restaurant: Restaurant
-  usersList: User[]
 }
 
-export default function RestaurantCard({ restaurant, usersList }: Props) {
+export default function RestaurantCard({ restaurant }: Props) {
   const { user } = useAuth()
   const isVotingEnabled = useVotingStatus()
-  const [isOpenDialog, setIsOpenDialog] = useState<boolean>(false)
-
-  const topAttendants =
-    restaurant.attendantsIds.length >= 5 ? restaurant.attendantsIds.slice(4) : restaurant.attendantsIds
 
   const onClickJoin = async () => {
     if (!user) {
@@ -83,50 +76,7 @@ export default function RestaurantCard({ restaurant, usersList }: Props) {
             まもなく投票開始
           </button>
         )}
-        <Dialog.Root
-          open={isOpenDialog}
-          onOpenChange={setIsOpenDialog}
-        >
-          <Dialog.Trigger>
-            <div className={styles.attendantsButton}>
-              {topAttendants.map((topAttendantId, index) => (
-                <Avatar
-                  size={20}
-                  user={usersList.find((user) => user.uid === topAttendantId)}
-                  key={index}
-                />
-              ))}
-              <Spacer
-                size={8}
-                isInline={true}
-              />
-              <span>{restaurant.attendantsIds.length}人</span>
-            </div>
-          </Dialog.Trigger>
-          <Dialog.Content title="参加者">
-            <div>
-              <p>{restaurant.attendantsIds.length}人</p>
-              <Spacer size={6} />
-              {restaurant.attendantsIds.map((attendantId, index) => (
-                <React.Fragment key={index}>
-                  <Spacer size={8} />
-                  <div className={styles.personNameRow}>
-                    <Avatar
-                      size={24}
-                      user={usersList.find((user) => user.uid === attendantId)}
-                    />
-                    <Spacer
-                      size={8}
-                      isInline={true}
-                    />
-                    {usersList.find((user) => user.uid === attendantId)?.name ?? ""}
-                  </div>
-                </React.Fragment>
-              ))}
-            </div>
-            <Dialog.Close />
-          </Dialog.Content>
-        </Dialog.Root>
+        <UsersDialog userIds={restaurant.attendantsIds} />
       </div>
     </div>
   )
