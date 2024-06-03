@@ -1,5 +1,9 @@
 declare const styles: {
-  readonly "DropdownMenuRadioItem": string;
+  readonly "Fieldset": string;
+  readonly "Input": string;
+  readonly "Label": string;
+  readonly "button": string;
+  readonly "buttonDisabled": string;
   readonly "checkboxItem": string;
   readonly "content": string;
   readonly "item": string;
@@ -11,3 +15,4 @@ declare const styles: {
   readonly "trigger": string;
 };
 export = styles;
+

@@ -4,8 +4,6 @@ declare const styles: {
   readonly "Label": string;
   readonly "button": string;
   readonly "buttonDisabled": string;
-  readonly "contentShow": string;
-  readonly "overlayShow": string;
 };
 export = styles;
 
