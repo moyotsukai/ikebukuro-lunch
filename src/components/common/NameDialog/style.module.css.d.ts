@@ -9,8 +9,6 @@ declare const styles: {
   readonly "RadioLabel": string;
   readonly "button": string;
   readonly "buttonDisabled": string;
-  readonly "contentShow": string;
-  readonly "overlayShow": string;
 };
 export = styles;
 

@@ -5,7 +5,7 @@
   --c-supporting-text: #595650;
   --c-border: #807866;
   --c-border-light: #e4dcc8;
-  --c-shadow: hsla(32, 100%, 50%, 0.15);
+  --c-shadow: hsla(32, 100%, 35%, 0.1);
   --transition-duration: 0.2s;
   --animation-timing-function: cubic-bezier(0.6, 0, 0.4, 1);
 }
@@ -53,4 +53,9 @@ li {
   list-style: none;
   margin: 0;
   padding: 0;
+}
+
+p {
+  font-family: "Noto Sans JP", sans-serif;
+  color: var(--c-text);
 }

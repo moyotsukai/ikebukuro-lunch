@@ -6,7 +6,7 @@ import { useEffect, useState } from "react"
 import Dialog from "@/components/ui/Dialog"
 import Spacer from "@/components/ui/Spacer"
 import * as RadioGroup from "@radix-ui/react-radio-group"
-import { Role } from "@/data/User"
+import { MEMBER, MENTOR, Role } from "@/data/User"
 import Avatar from "@/components/ui/Avatar"
 import { useAuth } from "@/model/auth/useAuth"
 
@@ -15,7 +15,7 @@ export default function NameDialog() {
   const { user, setUser } = useAuth()
   const isNameNotDetermined = user?.name === undefined || user?.name === ""
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(isNameNotDetermined)
-  const [role, setRole] = useState<string>("member")
+  const [role, setRole] = useState<string>(MEMBER)
 
   useEffect(() => {
     setName(user?.name ?? "")
@@ -28,10 +28,6 @@ export default function NameDialog() {
 
   const onChangeName = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value)
-  }
-
-  const onChangeRole = (role: string) => {
-    setRole(role)
   }
 
   const onClickSave = async () => {
@@ -102,14 +98,14 @@ export default function NameDialog() {
           <Spacer size={12} />
           <RadioGroup.Root
             className={styles.RadioGroupRoot}
-            defaultValue="member"
+            defaultValue={MEMBER}
             value={role}
-            onValueChange={onChangeRole}
+            onValueChange={setRole}
           >
             <div style={{ display: "flex", alignItems: "center" }}>
               <RadioGroup.Item
                 className={styles.RadioGroupItem}
-                value="member"
+                value={MEMBER}
                 id="r1"
               >
                 <RadioGroup.Indicator className={styles.RadioGroupIndicator} />
@@ -124,7 +120,7 @@ export default function NameDialog() {
             <div style={{ display: "flex", alignItems: "center" }}>
               <RadioGroup.Item
                 className={styles.RadioGroupItem}
-                value="mentor"
+                value={MENTOR}
                 id="r2"
               >
                 <RadioGroup.Indicator className={styles.RadioGroupIndicator} />
