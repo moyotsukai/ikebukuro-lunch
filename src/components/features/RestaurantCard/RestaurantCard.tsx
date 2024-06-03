@@ -160,7 +160,7 @@ export default function RestaurantCard({ restaurant }: Props) {
 
       <Spacer size={15} />
       <div className={styles.buttonContainer}>
-        {isVotingEnabled ? (
+        {isVotingEnabled && restaurant.votingStatus === "open" ? (
           restaurant.attendantsIds.includes(user?.uid ?? "") ? (
             <button
               onClick={onClickJoin}

@@ -2,6 +2,10 @@ export type OrderStyle = "takeout" | "mobile"
 export const TAKEOUT: OrderStyle = "takeout"
 export const MOBILE: OrderStyle = "mobile"
 
+export type RestaurantVotingStatus = "open" | "closed"
+export const OPEN: RestaurantVotingStatus = "open"
+export const CLOSED: RestaurantVotingStatus = "closed"
+
 export type Restaurant = {
   id: string
   name: string
@@ -11,6 +15,7 @@ export type Restaurant = {
   guidesIds: string[]
   orderStyle: OrderStyle
   memo: string
+  votingStatus: RestaurantVotingStatus
   senderId: string
   createdAt: Date
 }

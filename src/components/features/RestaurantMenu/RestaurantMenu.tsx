@@ -38,7 +38,23 @@ export default function RestaurantMenu({ restaurant }: Props) {
 
   const onClickEdit = () => {}
 
-  const onClickCloseVoting = () => {}
+  const onClickToggleVotingStatus = async () => {
+    if (restaurant.votingStatus === "open") {
+      await updateRestaurant({
+        docId: restaurant.id,
+        restaurant: {
+          votingStatus: "closed"
+        }
+      })
+    } else {
+      await updateRestaurant({
+        docId: restaurant.id,
+        restaurant: {
+          votingStatus: "open"
+        }
+      })
+    }
+  }
 
   return (
     <DropdownMenu.Root>
@@ -73,10 +89,10 @@ export default function RestaurantMenu({ restaurant }: Props) {
 
           {user?.role === "mentor" && (
             <DropdownMenu.Item
-              onClick={onClickCloseVoting}
+              onClick={onClickToggleVotingStatus}
               className={styles.item}
             >
-              締め切る
+              {restaurant.votingStatus === "open" ? "締め切る" : "再開する"}
             </DropdownMenu.Item>
           )}
         </DropdownMenu.Content>
