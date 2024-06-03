@@ -14,6 +14,7 @@ import * as RadioGroup from "@radix-ui/react-radio-group"
 import { GUIDE, STAY } from "@/data/User"
 import { CheckIcon, ExclamationTriangleIcon } from "@radix-ui/react-icons"
 import RestaurantMenu from "../RestaurantMenu"
+import { useUsersList } from "@/model/user/useUsersList"
 
 type Props = {
   restaurant: Restaurant
@@ -21,9 +22,13 @@ type Props = {
 
 export default function RestaurantCard({ restaurant }: Props) {
   const { user } = useAuth()
+  const usersList = useUsersList()
   const isVotingEnabled = useVotingStatus()
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false)
   const [attendanceRole, setAttendanceRole] = useState<string>(GUIDE)
+  const guideMentorName = restaurant.guidesIds.length
+    ? usersList.find((user) => user.uid === restaurant.guidesIds[0])?.name ?? ""
+    : ""
 
   const onClickJoin = async () => {
     setIsDialogOpen(false)
@@ -103,7 +108,7 @@ export default function RestaurantCard({ restaurant }: Props) {
                 height={16}
               />
               <Spacer size={6} />
-              <span>引率メンター</span>
+              <span>{`引率: ${guideMentorName}`}</span>
             </div>
           </div>
         </>
