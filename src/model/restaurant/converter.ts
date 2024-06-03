@@ -8,6 +8,22 @@ export const restaurantFromFirestore = ({ data, id }: { data: any; id: string })
     attendantsIds: data.attendantsIds ?? [],
     pastAttendantsIds: data.pastAttendantsIds ?? [],
     guidesIds: data.guidesIds ?? [],
+    orderStyle: data.orderStyle ?? "takeout",
+    comment: data.comment ?? [],
+    senderId: data.senderId ?? "",
+    createdAt: data.createdAt ?? new Date()
+  }
+}
+
+export const newRestaurantToFirestore = (data: Partial<Restaurant>): Omit<Restaurant, "id"> => {
+  return {
+    name: data.name ?? "",
+    url: data.url ?? "",
+    attendantsIds: data.attendantsIds ?? [],
+    pastAttendantsIds: data.pastAttendantsIds ?? [],
+    guidesIds: data.guidesIds ?? [],
+    orderStyle: data.orderStyle ?? "takeout",
+    comment: data.comment ?? [],
     senderId: data.senderId ?? "",
     createdAt: data.createdAt ?? new Date()
   }

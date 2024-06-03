@@ -7,6 +7,7 @@ import { PlusIcon } from "@radix-ui/react-icons"
 import Spacer from "@/components/ui/Spacer"
 import { createRestaurantDocData } from "@/model/restaurant/createRestaurantDocData"
 import { useAuth } from "@/model/auth/useAuth"
+import { newRestaurantToFirestore } from "@/model/restaurant/converter"
 
 export default function NewRestaurantDialog() {
   const [name, setName] = useState<string>("")
@@ -31,15 +32,12 @@ export default function NewRestaurantDialog() {
     }
 
     await createRestaurantDocData({
-      restaurant: {
+      restaurant: newRestaurantToFirestore({
         name: name,
         url: url,
-        attendantsIds: [],
-        pastAttendantsIds: [],
-        guidesIds: [],
         senderId: user.uid,
         createdAt: new Date()
-      }
+      })
     })
 
     resetEnteredContent()

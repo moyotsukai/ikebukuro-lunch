@@ -6,10 +6,11 @@ import Spacer from "@/components/ui/Spacer"
 import { useUsersList } from "@/model/user/useUsersList"
 
 type Props = {
+  title: string
   userIds: string[]
 }
 
-export default function UsersDialog({ userIds }: Props) {
+export default function UsersDialog({ title, userIds }: Props) {
   const [isOpenDialog, setIsOpenDialog] = useState<boolean>(false)
   const usersList = useUsersList()
   const MAX_USERS_LENGTH = 6
@@ -37,7 +38,7 @@ export default function UsersDialog({ userIds }: Props) {
           <span>{userIds.length}人</span>
         </div>
       </Dialog.Trigger>
-      <Dialog.Content title="参加者">
+      <Dialog.Content title={title}>
         <div>
           <p>{userIds.length}人</p>
           <Spacer size={6} />

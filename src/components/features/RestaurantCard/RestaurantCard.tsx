@@ -12,7 +12,8 @@ import UsersDialog from "../UsersDialog"
 import Dialog from "@/components/ui/Dialog"
 import * as RadioGroup from "@radix-ui/react-radio-group"
 import { GUIDE, STAY } from "@/data/User"
-import { CheckIcon } from "@radix-ui/react-icons"
+import { CheckIcon, ExclamationTriangleIcon } from "@radix-ui/react-icons"
+import RestaurantMenu from "../RestaurantMenu"
 
 type Props = {
   restaurant: Restaurant
@@ -29,7 +30,11 @@ export default function RestaurantCard({ restaurant }: Props) {
     if (!user) {
       return
     }
-    await updateAttendance()
+    if (user.role === "mentor") {
+      await updateAttendanceAsGuide()
+    } else {
+      await updateAttendance()
+    }
   }
 
   const updateAttendance = async () => {
@@ -57,15 +62,16 @@ export default function RestaurantCard({ restaurant }: Props) {
     if (!user) {
       return
     }
-    if (attendanceRole === GUIDE) {
-      if (restaurant.guidesIds.includes(user.uid)) {
-        await updateRestaurantArray({
-          docId: restaurant.id,
-          key: "guidesIds",
-          value: user.uid,
-          method: "remove"
-        })
-      } else {
+
+    if (restaurant.guidesIds.includes(user.uid)) {
+      await updateRestaurantArray({
+        docId: restaurant.id,
+        key: "guidesIds",
+        value: user.uid,
+        method: "remove"
+      })
+    } else {
+      if (attendanceRole === GUIDE) {
         await updateRestaurantArray({
           docId: restaurant.id,
           key: "guidesIds",
@@ -79,22 +85,50 @@ export default function RestaurantCard({ restaurant }: Props) {
 
   return (
     <div className={styles.card}>
-      <p className={styles.title}>{restaurant.name}</p>
-      {restaurant.guidesIds.length && (
+      <div className={styles.titleContainer}>
+        <p className={styles.title}>{restaurant.name}</p>
+        <RestaurantMenu restaurant={restaurant} />
+      </div>
+
+      {restaurant.guidesIds.length !== 0 && (
         <>
+          <Spacer
+            size={4}
+            isInline={true}
+          />
           <div style={{ display: "inline-block" }}>
             <div className={styles.positiveBadge}>
               <CheckIcon
                 width={16}
                 height={16}
               />
-              <Spacer size={4} />
-              <span>引率メンターあり</span>
+              <Spacer size={6} />
+              <span>引率メンター</span>
             </div>
           </div>
-          <Spacer size={12} />
         </>
       )}
+
+      {restaurant.orderStyle === "mobile" && (
+        <>
+          <Spacer
+            size={4}
+            isInline={true}
+          />
+          <div style={{ display: "inline-block" }}>
+            <div className={styles.alartBadge}>
+              <ExclamationTriangleIcon
+                width={16}
+                height={16}
+              />
+              <Spacer size={6} />
+              <span>モバイルオーダー</span>
+            </div>
+          </div>
+        </>
+      )}
+
+      <Spacer size={10} />
       <div>
         <Link
           href={restaurant.url}
@@ -103,7 +137,19 @@ export default function RestaurantCard({ restaurant }: Props) {
           {restaurant.url}
         </Link>
       </div>
-      <Spacer size={12} />
+
+      {restaurant.pastAttendantsIds.length !== 0 && (
+        <>
+          <Spacer size={10} />
+          <div>
+            <p
+              className={styles.supportingText}
+            >{`前回までに${restaurant.pastAttendantsIds.length}人が買いに行きました`}</p>
+          </div>
+        </>
+      )}
+
+      <Spacer size={15} />
       <div className={styles.buttonContainer}>
         {isVotingEnabled ? (
           restaurant.attendantsIds.includes(user?.uid ?? "") ? (
@@ -188,7 +234,10 @@ export default function RestaurantCard({ restaurant }: Props) {
             まもなく投票開始
           </button>
         )}
-        <UsersDialog userIds={restaurant.attendantsIds} />
+        <UsersDialog
+          title="参加者"
+          userIds={restaurant.attendantsIds}
+        />
       </div>
     </div>
   )

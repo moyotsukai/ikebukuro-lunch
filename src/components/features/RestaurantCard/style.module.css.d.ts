@@ -3,6 +3,7 @@ declare const styles: {
   readonly "RadioGroupItem": string;
   readonly "RadioGroupRoot": string;
   readonly "RadioLabel": string;
+  readonly "alartBadge": string;
   readonly "button": string;
   readonly "buttonContainer": string;
   readonly "calcelButton": string;
@@ -10,7 +11,9 @@ declare const styles: {
   readonly "joinButton": string;
   readonly "link": string;
   readonly "positiveBadge": string;
+  readonly "supportingText": string;
   readonly "title": string;
+  readonly "titleContainer": string;
   readonly "waitingMessageButton": string;
 };
 export = styles;

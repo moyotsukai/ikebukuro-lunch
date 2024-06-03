@@ -58,7 +58,7 @@ export default function Home() {
         <h1>お店一覧</h1>
         <NewRestaurantDialog />
       </div>
-      <Spacer size={20} />
+      <Spacer size={30} />
       {user?.role === "mentor" && (
         <div className={styles.mentorArea}>
           <p>メンター向けエリア</p>
@@ -100,7 +100,10 @@ export default function Home() {
       {isVotingEnabled && (
         <div className={styles.topInfoArea}>
           <span>未投票</span>
-          <UsersDialog userIds={usersNotDeterminedIds} />
+          <UsersDialog
+            title="未投票"
+            userIds={usersNotDeterminedIds}
+          />
         </div>
       )}
 
