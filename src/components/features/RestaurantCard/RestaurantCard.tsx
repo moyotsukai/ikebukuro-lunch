@@ -4,14 +4,14 @@ import Link from "next/link"
 import styles from "./style.module.css"
 import { Restaurant } from "@/data/Restaurant"
 import Spacer from "@/components/ui/Spacer"
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import { useAuth } from "@/model/auth/useAuth"
 import { updateRestaurantArray } from "@/model/restaurant/updateRestaurantDocData"
 import { useVotingStatus } from "@/model/votingStatus/useVotingStatus"
 import UsersDialog from "../UsersDialog"
 import Dialog from "@/components/ui/Dialog"
 import * as RadioGroup from "@radix-ui/react-radio-group"
-import { AttendanceRole, GUIDE, STAY } from "@/data/User"
+import { GUIDE, STAY } from "@/data/User"
 import { CheckIcon } from "@radix-ui/react-icons"
 
 type Props = {
@@ -23,10 +23,6 @@ export default function RestaurantCard({ restaurant }: Props) {
   const isVotingEnabled = useVotingStatus()
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false)
   const [attendanceRole, setAttendanceRole] = useState<string>(GUIDE)
-
-  useEffect(() => {
-    console.log("attendance role: ", attendanceRole)
-  }, [attendanceRole])
 
   const onClickJoin = async () => {
     setIsDialogOpen(false)
