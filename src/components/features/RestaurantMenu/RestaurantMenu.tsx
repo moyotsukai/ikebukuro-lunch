@@ -5,12 +5,14 @@ import { useEffect, useState } from "react"
 import { Restaurant } from "@/data/Restaurant"
 import { updateRestaurant } from "@/model/restaurant/updateRestaurantDocData"
 import { asyncTask } from "@/utils/asyncTask"
+import { useAuth } from "@/model/auth/useAuth"
 
 type Props = {
   restaurant: Restaurant
 }
 
 export default function RestaurantMenu({ restaurant }: Props) {
+  const { user } = useAuth()
   const [isMobileOrder, setIsMobileOrder] = useState<boolean>(restaurant.orderStyle === "mobile")
 
   useEffect(() => {
@@ -69,12 +71,14 @@ export default function RestaurantMenu({ restaurant }: Props) {
             編集
           </DropdownMenu.Item>
 
-          <DropdownMenu.Item
-            onClick={onClickCloseVoting}
-            className={styles.item}
-          >
-            締め切る
-          </DropdownMenu.Item>
+          {user?.role === "mentor" && (
+            <DropdownMenu.Item
+              onClick={onClickCloseVoting}
+              className={styles.item}
+            >
+              締め切る
+            </DropdownMenu.Item>
+          )}
         </DropdownMenu.Content>
       </DropdownMenu.Portal>
     </DropdownMenu.Root>

@@ -12,6 +12,7 @@ import { newRestaurantToFirestore } from "@/model/restaurant/converter"
 export default function NewRestaurantDialog() {
   const [name, setName] = useState<string>("")
   const [url, setUrl] = useState<string>("")
+  const [memo, setMemo] = useState<string>("")
   const { user } = useAuth()
   const isFormNotFilled = name === ""
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false)
@@ -22,6 +23,10 @@ export default function NewRestaurantDialog() {
 
   const onChangeUrl = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUrl(event.target.value)
+  }
+
+  const onChangeMemo = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setMemo(event.target.value)
   }
 
   const onClickSave = async () => {
@@ -35,6 +40,7 @@ export default function NewRestaurantDialog() {
       restaurant: newRestaurantToFirestore({
         name: name,
         url: url,
+        memo: memo,
         senderId: user.uid,
         createdAt: new Date()
       })
@@ -59,6 +65,7 @@ export default function NewRestaurantDialog() {
           お店を提案
         </button>
       </Dialog.Trigger>
+
       <Dialog.Content
         title="お店を提案"
         onClose={resetEnteredContent}
@@ -77,6 +84,7 @@ export default function NewRestaurantDialog() {
             onChange={onChangeName}
           />
         </fieldset>
+
         <Spacer size={20} />
         <fieldset className={styles.Fieldset}>
           <label
@@ -90,6 +98,22 @@ export default function NewRestaurantDialog() {
             id="url"
             value={url}
             onChange={onChangeUrl}
+          />
+        </fieldset>
+
+        <Spacer size={20} />
+        <fieldset className={styles.Fieldset}>
+          <label
+            className={styles.Label}
+            htmlFor="memo"
+          >
+            メモ
+          </label>
+          <input
+            className={styles.Input}
+            id="memo"
+            value={memo}
+            onChange={onChangeMemo}
           />
         </fieldset>
 

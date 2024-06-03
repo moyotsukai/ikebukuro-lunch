@@ -10,7 +10,7 @@ export type Restaurant = {
   pastAttendantsIds: string[]
   guidesIds: string[]
   orderStyle: OrderStyle
-  comment: string[]
+  memo: string
   senderId: string
   createdAt: Date
 }

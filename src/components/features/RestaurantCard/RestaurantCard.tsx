@@ -138,6 +138,15 @@ export default function RestaurantCard({ restaurant }: Props) {
         </Link>
       </div>
 
+      {restaurant.memo && (
+        <>
+          <Spacer size={12} />
+          <div>
+            <p className={styles.supportingText}>{restaurant.memo}</p>
+          </div>
+        </>
+      )}
+
       {restaurant.pastAttendantsIds.length !== 0 && (
         <>
           <Spacer size={10} />
