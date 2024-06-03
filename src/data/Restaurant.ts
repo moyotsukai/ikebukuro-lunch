@@ -4,6 +4,7 @@ export type Restaurant = {
   url: string
   attendantsIds: string[]
   pastAttendantsIds: string[]
+  guidesIds: string[]
   senderId: string
   createdAt: Date
 }

@@ -36,6 +36,7 @@ export default function NewRestaurantDialog() {
         url: url,
         attendantsIds: [],
         pastAttendantsIds: [],
+        guidesIds: [],
         senderId: user.uid,
         createdAt: new Date()
       }

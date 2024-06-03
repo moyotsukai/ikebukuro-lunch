@@ -3,7 +3,6 @@ import styles from "./style.module.css"
 import * as DialogPrimitive from "@radix-ui/react-dialog"
 import { Dispatch, MouseEventHandler, SetStateAction } from "react"
 import Spacer from "../Spacer"
-import ScrollArea from "../ScrollArea"
 
 type RootProps = {
   open: boolean

@@ -33,7 +33,8 @@ export default function Home() {
       const restaurant = restaurants[i]
       const modifiedProperties: Partial<Restaurant> = {
         attendantsIds: [],
-        pastAttendantsIds: [...restaurant.attendantsIds, ...restaurant.pastAttendantsIds]
+        pastAttendantsIds: [...restaurant.attendantsIds, ...restaurant.pastAttendantsIds],
+        guidesIds: []
       }
       await updateRestaurant({ docId: restaurant.id, restaurant: modifiedProperties })
     }

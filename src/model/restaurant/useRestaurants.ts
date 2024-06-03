@@ -3,6 +3,7 @@ import { db } from "@/libs/firebase"
 import { collection, onSnapshot } from "firebase/firestore"
 import { useEffect, useRef, useState } from "react"
 import { useAuth } from "../auth/useAuth"
+import { restaurantFromFirestore } from "./converter"
 
 export const useRestaurants = () => {
   const { user } = useAuth()
@@ -22,28 +23,18 @@ export const useRestaurants = () => {
       snapshot.docChanges().forEach((change) => {
         if (change.type === "added") {
           const data = change.doc.data()
-          const newRestaurant: Restaurant = {
-            id: data.id ?? change.doc.id,
-            name: data.name ?? "",
-            url: data.url ?? "",
-            attendantsIds: data.attendantsIds ?? [],
-            pastAttendantsIds: data.pastAttendantsIds ?? [],
-            senderId: data.senderId ?? "",
-            createdAt: data.createdAt ?? new Date()
-          }
+          const newRestaurant = restaurantFromFirestore({
+            data: data,
+            id: change.doc.id
+          })
           setRestaurants((currentValue) => [newRestaurant, ...currentValue])
         }
         if (change.type === "modified") {
           const data = change.doc.data()
-          const updatedRestaurant: Restaurant = {
-            id: data.id ?? change.doc.id,
-            name: data.name ?? "",
-            url: data.url ?? "",
-            attendantsIds: data.attendantsIds ?? [],
-            pastAttendantsIds: data.pastAttendantsIds ?? [],
-            senderId: data.senderId ?? "",
-            createdAt: data.createdAt ?? new Date()
-          }
+          const updatedRestaurant = restaurantFromFirestore({
+            data: data,
+            id: change.doc.id
+          })
           setRestaurants((currentValue) => {
             const newValue = currentValue.map((restaurant) => {
               if (restaurant.id === updatedRestaurant.id) {
