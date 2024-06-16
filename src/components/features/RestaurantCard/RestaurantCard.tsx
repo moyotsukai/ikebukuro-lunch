@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import styles from "./style.module.css"
+import styles, { button } from "./style.module.css"
 import { Restaurant } from "@/data/Restaurant"
 import Spacer from "@/components/ui/Spacer"
 import React, { useState } from "react"
@@ -29,6 +29,9 @@ export default function RestaurantCard({ restaurant }: Props) {
   const guideMentorName = restaurant.guidesIds.length
     ? usersList.find((user) => user.uid === restaurant.guidesIds[0])?.name ?? ""
     : ""
+  const attendingMembers = usersList
+    .filter((user) => restaurant.attendantsIds.includes(user.uid))
+    .filter((user) => user.role === "member")
 
   const onClickJoin = async () => {
     setIsDialogOpen(false)
@@ -165,7 +168,14 @@ export default function RestaurantCard({ restaurant }: Props) {
 
       <Spacer size={15} />
       <div className={styles.buttonContainer}>
-        {isVotingEnabled && restaurant.votingStatus === "open" ? (
+        {isVotingEnabled && restaurant.votingStatus === "open" && attendingMembers.length >= 10 ? (
+          <button
+            disabled={true}
+            className={styles.waitingMessageButton}
+          >
+            定員です
+          </button>
+        ) : isVotingEnabled && restaurant.votingStatus === "open" ? (
           restaurant.attendantsIds.includes(user?.uid ?? "") ? (
             <button
               onClick={onClickJoin}
