@@ -21,6 +21,12 @@ export default function Home() {
   const isVotingEnabled = useVotingStatus()
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false)
   const users = useUsersList()
+  const usersDeterminedIds = restaurants.map((restauran) => restauran.attendantsIds).flat()
+  const usersDetermined = users.filter(($0) => {
+    if (usersDeterminedIds.includes($0.uid)) {
+      return $0
+    }
+  })
 
   const onClickStart = async () => {
     await setVotingStatus({ votingStatus: { isVotingEnabled: true } })
@@ -41,10 +47,17 @@ export default function Home() {
     }
   }
 
-  const usersNotDeterminedIds = users
+  const usersNotDeterminedIds = Array.from(new Map(users.map((user) => [user.name, user])).values())
     .filter((user) => {
-      const usersDetermined = restaurants.map((restauran) => restauran.attendantsIds).flat()
-      if (usersDetermined.includes(user.uid)) {
+      if (usersDeterminedIds.includes(user.uid)) {
+        return false
+      } else {
+        return true
+      }
+    })
+    .filter((user) => {
+      const usersDeterminedNames = usersDetermined.map(($0) => $0.name)
+      if (usersDeterminedNames.includes(user.name)) {
         return false
       } else {
         return true
