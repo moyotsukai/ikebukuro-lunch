@@ -2,11 +2,11 @@ import { Restaurant } from "@/data/Restaurant"
 import { db } from "@/libs/firebase"
 import { collection, onSnapshot } from "firebase/firestore"
 import { useEffect, useRef, useState } from "react"
-import { useAuth } from "../auth/useAuth"
 import { restaurantFromFirestore } from "./converter"
+import { useUserValue } from "@/context/UserContext"
 
 export const useRestaurants = () => {
-  const { user } = useAuth()
+  const user = useUserValue()
   const [restaurants, setRestaurants] = useState<Restaurant[]>([])
   const hasFetched = useRef<boolean>(false)
 

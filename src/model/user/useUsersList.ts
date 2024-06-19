@@ -1,11 +1,11 @@
+import { useUserValue } from "@/context/UserContext"
 import { User } from "@/data/User"
 import { db } from "@/libs/firebase"
 import { collection, onSnapshot } from "firebase/firestore"
 import { useEffect, useRef, useState } from "react"
-import { useAuth } from "../auth/useAuth"
 
 export const useUsersList = () => {
-  const { user } = useAuth()
+  const user = useUserValue()
   const [usersList, setUsersList] = useState<User[]>([])
   const hasFetched = useRef<boolean>(false)
 

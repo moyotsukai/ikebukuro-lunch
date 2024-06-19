@@ -1,11 +1,10 @@
 "use client"
 
 import Link from "next/link"
-import styles, { button } from "./style.module.css"
+import styles from "./style.module.css"
 import { Restaurant } from "@/data/Restaurant"
 import Spacer from "@/components/ui/Spacer"
 import React, { useState } from "react"
-import { useAuth } from "@/model/auth/useAuth"
 import { updateRestaurantArray } from "@/model/restaurant/updateRestaurantDocData"
 import { useVotingStatus } from "@/model/votingStatus/useVotingStatus"
 import UsersDialog from "../UsersDialog"
@@ -15,13 +14,14 @@ import { GUIDE, STAY } from "@/data/User"
 import { CheckIcon, ExclamationTriangleIcon } from "@radix-ui/react-icons"
 import RestaurantMenu from "../RestaurantMenu"
 import { useUsersList } from "@/model/user/useUsersList"
+import { useUserValue } from "@/context/UserContext"
 
 type Props = {
   restaurant: Restaurant
 }
 
 export default function RestaurantCard({ restaurant }: Props) {
-  const { user } = useAuth()
+  const user = useUserValue()
   const usersList = useUsersList()
   const isVotingEnabled = useVotingStatus()
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false)
@@ -168,7 +168,7 @@ export default function RestaurantCard({ restaurant }: Props) {
 
       <Spacer size={15} />
       <div className={styles.buttonContainer}>
-        {isVotingEnabled && restaurant.votingStatus === "open" && attendingMembers.length >= 10 ? (
+        {isVotingEnabled && restaurant.votingStatus === "open" && attendingMembers.length >= 9 ? (
           <button
             disabled={true}
             className={styles.waitingMessageButton}

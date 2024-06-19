@@ -8,11 +8,11 @@ import Spacer from "@/components/ui/Spacer"
 import * as RadioGroup from "@radix-ui/react-radio-group"
 import { MEMBER, MENTOR, Role } from "@/data/User"
 import Avatar from "@/components/ui/Avatar"
-import { useAuth } from "@/model/auth/useAuth"
+import { useSetUser, useUserValue } from "@/context/UserContext"
 
 export default function NameDialog() {
   const [name, setName] = useState<string>("")
-  const { user, setUser } = useAuth()
+  const [user, setUser] = [useUserValue(), useSetUser()]
   const isNameNotDetermined = user?.name === undefined || user?.name === ""
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(isNameNotDetermined)
   const [role, setRole] = useState<string>(MEMBER)

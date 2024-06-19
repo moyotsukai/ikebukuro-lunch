@@ -6,14 +6,14 @@ import Dialog from "@/components/ui/Dialog"
 import { PlusIcon } from "@radix-ui/react-icons"
 import Spacer from "@/components/ui/Spacer"
 import { createRestaurantDocData } from "@/model/restaurant/createRestaurantDocData"
-import { useAuth } from "@/model/auth/useAuth"
 import { newRestaurantToFirestore } from "@/model/restaurant/converter"
+import { useUserValue } from "@/context/UserContext"
 
 export default function NewRestaurantDialog() {
   const [name, setName] = useState<string>("")
   const [url, setUrl] = useState<string>("")
   const [memo, setMemo] = useState<string>("")
-  const { user } = useAuth()
+  const user = useUserValue()
   const isFormNotFilled = name === ""
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false)
 
