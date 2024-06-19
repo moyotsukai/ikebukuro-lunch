@@ -5,16 +5,16 @@ import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { Restaurant } from "@/data/Restaurant"
 import { updateRestaurant } from "@/model/restaurant/updateRestaurantDocData"
 import { asyncTask } from "@/utils/asyncTask"
-import { useAuth } from "@/model/auth/useAuth"
 import Dialog from "@/components/ui/Dialog"
 import Spacer from "@/components/ui/Spacer"
+import { useUserValue } from "@/context/UserContext"
 
 type Props = {
   restaurant: Restaurant
 }
 
 export default function RestaurantMenu({ restaurant }: Props) {
-  const { user } = useAuth()
+  const user = useUserValue()
   const [isMobileOrder, setIsMobileOrder] = useState<boolean>(restaurant.orderStyle === "mobile")
   const [isEditDialogOpen, setIsEditDialogOpen] = useState<boolean>(false)
 
@@ -125,7 +125,7 @@ function EditRestaurantDialog({
   const [name, setName] = useState<string>(restaurant.name)
   const [url, setUrl] = useState<string>(restaurant.url)
   const [memo, setMemo] = useState<string>(restaurant.memo)
-  const { user } = useAuth()
+  const user = useUserValue()
   const isFormNotFilled = name === ""
 
   const onChangeName = (event: React.ChangeEvent<HTMLInputElement>) => {

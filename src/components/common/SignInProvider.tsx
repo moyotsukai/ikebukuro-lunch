@@ -1,13 +1,26 @@
-import { useEffect, useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
+import { signIn } from "../../model/auth/auth"
+import Message from "../ui/Message"
+import { useSetUser, useUserValue } from "@/context/UserContext"
 import { onAuthStateChanged } from "firebase/auth"
 import { auth } from "@/libs/firebase"
-import { getUserDocData } from "../user/getUserDocData"
-import { User } from "@/data/User"
+import { getUserDocData } from "@/model/user/getUserDocData"
 
-export const useAuth = () => {
-  const [user, setUser] = useState<User | undefined | null>(undefined)
+type Props = {
+  isLoading?: boolean
+  children: React.ReactNode
+}
+
+export default function SignInProvider({ isLoading, children }: Props) {
+  const [user, setUser] = [useUserValue(), useSetUser()]
   const [isLoadingUser, setIsLoadingUser] = useState<boolean>(true)
   const hasFetched = useRef<boolean>(false)
+
+  useEffect(() => {
+    if (!user) {
+      signIn()
+    }
+  }, [user])
 
   useEffect(() => {
     if (hasFetched.current) {
@@ -41,7 +54,15 @@ export const useAuth = () => {
     })
 
     return unsubscribe
-  }, [setUser])
+  }, [])
 
-  return { user, setUser, isLoadingUser }
+  if (isLoadingUser || (isLoading ?? false)) {
+    return <Message isLoading={true}>読み込み中...</Message>
+  }
+
+  if (user === null) {
+    return <Message>接続エラー</Message>
+  }
+
+  return <React.Fragment>{children}</React.Fragment>
 }

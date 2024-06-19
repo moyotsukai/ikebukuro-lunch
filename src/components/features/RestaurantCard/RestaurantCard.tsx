@@ -5,7 +5,6 @@ import styles from "./style.module.css"
 import { Restaurant } from "@/data/Restaurant"
 import Spacer from "@/components/ui/Spacer"
 import React, { useState } from "react"
-import { useAuth } from "@/model/auth/useAuth"
 import { updateRestaurantArray } from "@/model/restaurant/updateRestaurantDocData"
 import { useVotingStatus } from "@/model/votingStatus/useVotingStatus"
 import UsersDialog from "../UsersDialog"
@@ -15,13 +14,14 @@ import { GUIDE, STAY } from "@/data/User"
 import { CheckIcon, ExclamationTriangleIcon } from "@radix-ui/react-icons"
 import RestaurantMenu from "../RestaurantMenu"
 import { useUsersList } from "@/model/user/useUsersList"
+import { useUserValue } from "@/context/UserContext"
 
 type Props = {
   restaurant: Restaurant
 }
 
 export default function RestaurantCard({ restaurant }: Props) {
-  const { user } = useAuth()
+  const user = useUserValue()
   const usersList = useUsersList()
   const isVotingEnabled = useVotingStatus()
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false)
@@ -29,6 +29,9 @@ export default function RestaurantCard({ restaurant }: Props) {
   const guideMentorName = restaurant.guidesIds.length
     ? usersList.find((user) => user.uid === restaurant.guidesIds[0])?.name ?? ""
     : ""
+  const attendingMembers = usersList
+    .filter((user) => restaurant.attendantsIds.includes(user.uid))
+    .filter((user) => user.role === "member")
 
   const onClickJoin = async () => {
     setIsDialogOpen(false)
@@ -165,7 +168,14 @@ export default function RestaurantCard({ restaurant }: Props) {
 
       <Spacer size={15} />
       <div className={styles.buttonContainer}>
-        {isVotingEnabled && restaurant.votingStatus === "open" ? (
+        {isVotingEnabled && restaurant.votingStatus === "open" && attendingMembers.length >= 9 ? (
+          <button
+            disabled={true}
+            className={styles.waitingMessageButton}
+          >
+            定員です
+          </button>
+        ) : isVotingEnabled && restaurant.votingStatus === "open" ? (
           restaurant.attendantsIds.includes(user?.uid ?? "") ? (
             <button
               onClick={onClickJoin}
