@@ -168,7 +168,10 @@ export default function RestaurantCard({ restaurant }: Props) {
 
       <Spacer size={15} />
       <div className={styles.buttonContainer}>
-        {isVotingEnabled && restaurant.votingStatus === "open" && attendingMembers.length >= 9 ? (
+        {isVotingEnabled &&
+        restaurant.votingStatus === "open" &&
+        attendingMembers.length >= 9 &&
+        !restaurant.attendantsIds.includes(user?.uid ?? "") ? (
           <button
             disabled={true}
             className={styles.waitingMessageButton}
