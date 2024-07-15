@@ -171,7 +171,8 @@ export default function RestaurantCard({ restaurant }: Props) {
         {isVotingEnabled &&
         restaurant.votingStatus === "open" &&
         attendingMembers.length >= 9 &&
-        !restaurant.attendantsIds.includes(user?.uid ?? "") ? (
+        !restaurant.attendantsIds.includes(user?.uid ?? "") &&
+        user?.role === "member" ? (
           <button
             disabled={true}
             className={styles.waitingMessageButton}
