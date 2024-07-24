@@ -27,6 +27,7 @@ export default function Home() {
       return $0
     }
   })
+  const restaurantsSorted = restaurants.sort((a, b) => b.pastAttendantsIds.length - a.pastAttendantsIds.length)
 
   const onClickStart = async () => {
     await setVotingStatus({ votingStatus: { isVotingEnabled: true } })
@@ -122,8 +123,8 @@ export default function Home() {
       )}
 
       <div>
-        {restaurants.map((restaurant, index) => (
-          <React.Fragment key={index}>
+        {restaurantsSorted.map((restaurant) => (
+          <React.Fragment key={restaurant.id}>
             <Spacer size={10} />
             <RestaurantCard restaurant={restaurant} />
           </React.Fragment>
