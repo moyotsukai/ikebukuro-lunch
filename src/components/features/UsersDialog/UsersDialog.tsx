@@ -23,11 +23,11 @@ export default function UsersDialog({ title, userIds }: Props) {
     >
       <Dialog.Trigger>
         <div className={styles.attendantsButton}>
-          {topUsers.map((topUserId, index) => (
+          {topUsers.map((topUserId) => (
             <Avatar
               size={20}
               user={usersList.find((user) => user.uid === topUserId)}
-              key={index}
+              key={topUserId}
             />
           ))}
           {userIds.length >= MAX_USERS_LENGTH && <span>...</span>}
@@ -42,8 +42,8 @@ export default function UsersDialog({ title, userIds }: Props) {
         <div>
           <p>{userIds.length}人</p>
           <Spacer size={6} />
-          {userIds.map((attendantId, index) => (
-            <React.Fragment key={index}>
+          {userIds.map((attendantId) => (
+            <React.Fragment key={attendantId}>
               <Spacer size={12} />
               <div className={styles.personNameRow}>
                 <Avatar
