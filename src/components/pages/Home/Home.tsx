@@ -14,6 +14,7 @@ import { Restaurant } from "@/data/Restaurant"
 import UsersDialog from "@/components/features/UsersDialog"
 import { useUsersList } from "@/model/user/useUsersList"
 import { useUserValue } from "@/context/UserContext"
+import Button from "@/components/ui/Button"
 
 export default function Home() {
   const user = useUserValue()
@@ -21,13 +22,15 @@ export default function Home() {
   const isVotingEnabled = useVotingStatus()
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false)
   const users = useUsersList()
-  const usersDeterminedIds = restaurants.map((restauran) => restauran.attendantsIds).flat()
+  const usersDeterminedIds = restaurants.map((restaurant) => restaurant.attendantsIds).flat()
   const usersDetermined = users.filter(($0) => {
     if (usersDeterminedIds.includes($0.uid)) {
       return $0
     }
   })
-  const restaurantsSorted = restaurants.sort((a, b) => b.pastAttendantsIds.length - a.pastAttendantsIds.length)
+  const restaurantsSorted = restaurants
+    .filter((restaurant) => !restaurant.isHidden)
+    .sort((a, b) => b.pastAttendantsIds.length - a.pastAttendantsIds.length)
 
   const onClickStart = async () => {
     await setVotingStatus({ votingStatus: { isVotingEnabled: true } })
@@ -43,6 +46,16 @@ export default function Home() {
         pastAttendantsIds: [...restaurant.attendantsIds, ...restaurant.pastAttendantsIds],
         guidesIds: [],
         votingStatus: "open"
+      }
+      await updateRestaurant({ docId: restaurant.id, restaurant: modifiedProperties })
+    }
+  }
+
+  const onClickResetIsHidden = async () => {
+    for (let i = 0; i < restaurants.length; i++) {
+      const restaurant = restaurants[i]
+      const modifiedProperties: Partial<Restaurant> = {
+        isHidden: false
       }
       await updateRestaurant({ docId: restaurant.id, restaurant: modifiedProperties })
     }
@@ -108,6 +121,14 @@ export default function Home() {
               募集開始
             </button>
           )}
+
+          <Spacer size={20} />
+          <button
+            className={styles.resetButton}
+            onClick={onClickResetIsHidden}
+          >
+            非表示のお店をすべて再表示
+          </button>
         </div>
       )}
       <Spacer size={20} />
