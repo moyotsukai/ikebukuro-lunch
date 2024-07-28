@@ -14,6 +14,7 @@ export type Restaurant = {
   pastAttendantsIds: string[]
   guidesIds: string[]
   orderStyle: OrderStyle
+  isHidden: boolean
   memo: string
   votingStatus: RestaurantVotingStatus
   senderId: string

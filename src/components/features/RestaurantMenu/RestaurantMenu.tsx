@@ -42,6 +42,15 @@ export default function RestaurantMenu({ restaurant }: Props) {
     setIsEditDialogOpen(true)
   }
 
+  const onClickHide = async () => {
+    await updateRestaurant({
+      docId: restaurant.id,
+      restaurant: {
+        isHidden: true
+      }
+    })
+  }
+
   const onClickToggleVotingStatus = async () => {
     if (restaurant.votingStatus === "open") {
       await updateRestaurant({
@@ -90,6 +99,13 @@ export default function RestaurantMenu({ restaurant }: Props) {
               className={styles.item}
             >
               編集
+            </DropdownMenu.Item>
+
+            <DropdownMenu.Item
+              onClick={onClickHide}
+              className={styles.item}
+            >
+              非表示にする
             </DropdownMenu.Item>
 
             {user?.role === "mentor" && (
